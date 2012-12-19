@@ -9,16 +9,22 @@
 #define EMPLOYE_H_
 #include <string>
 using namespace std;
-#include "Personnel.h"
 
-class Employe: Personnel
+class Employe
 {
 public:
 	Employe();
 	~Employe();
+    void Connexion();
 	void AuthentificationEmploye();
+    void VerificationEstDansListe();
+    void RedigeRapport();
+    void RecuperationRapport();
+    void Deconnexion();
     void RedigeRapport(string);
     void PassageMessage(string);
+public:
+    char recu[100];
 };
 
 #endif /* EMPLOYE_H_ */
