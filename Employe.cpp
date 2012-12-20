@@ -7,6 +7,7 @@
 
 #include "Employe.h"
 #include <iostream>
+#include <stdio.h>
 
 Employe::Employe()
 {
@@ -35,6 +36,7 @@ string Employe::Analyse(string p_message)
     }
     if (action.compare("connexion_employe")==0)
     {
+        RedigeRapport();
         return "employe";
     }
     if (action.compare("connexion_refuse")==0)
@@ -45,26 +47,80 @@ string Employe::Analyse(string p_message)
     {
         return "liste";
     }
+    if(action.compare("transfert_rapport")==0)
+    {
+        return "rapport";
+    }
+    if(action.compare("deconnexion")==0)
+    {
+        return "deconnexion";
+    }
     return "impossible";
 }
 
-void Connexion()
+void Employe::Connexion()
 {
-    printf("Un employé se connecte...\n");
+    printf("Je me connecte au serveur ...\n");
 }
 
 void Employe::AuthentificationEmploye()
 {
-    printf("Saisissez votre pseudo pour vous authentifiez\n");
+    printf("Saisissez votre pseudo pour vous authentifiez, Tappez\n");
     string message;
-    cin >> message;
+    getline(cin,message);
+    this->pseudo = message;
+    string connexion = "connexion_employe>"+message;
 }
 
-void envoieRapport(string donnees)
+void Employe::CreationListe()
+{
+    string pseudo_liste;
+    string envoi_pseudo_liste;
+    printf("Veuillez créer votre liste contenant les employés devant rédiger un rapport aujourd'hui\n");
+    printf("Quand vous avez terminé, tapez fini\n");
+    getline(cin,pseudo_liste);
+    while(pseudo_liste.compare("fini")!=0)
+    {
+        envoi_pseudo_liste = "ajout_employe>"+pseudo_liste; //TO DO envoi du pseudo 
+        getline(cin,pseudo_liste);
+    }
+    printf("Liste terminée ! \n");
+}
+
+void Employe::DemandeListeRapportFait()
+{
+    string demande_liste="demande_liste_rapport_fait>";
+    
+    // TO DO : envoi de la trame au serveur
+}
+
+void Employe::DemandeRapportParticulier(string pseudo)
+{
+    string demande_rapport="demande_rapport>"+pseudo;
+    
+    // TO DO : envoi de de la trame au serveur
+}
+
+void Employe::RedigeRapport()
+{
+    printf("Saisissez votre rapport sections par sections\n");
+    printf("Une fois votre rapport terminé, tapez fin\n");
+    string rapport;
+    getline(cin,rapport);
+    while(rapport.compare("fin")!=0)
+    {
+    envoieRapport(rapport);
+    getline(cin,rapport);
+    }
+    printf("Votre rapport est terminé ! Vous allez être déconnecté \n");
+    Deconnexion();
+}
+
+void Employe::envoieRapport(string donnees)
 {
     int cpt = 0;
     string mes = "";
-    
+    string envoi;
     for(int i = 0 ; i < donnees.length() ; i++)
     {
         mes += donnees.at(i);
@@ -72,6 +128,7 @@ void envoieRapport(string donnees)
         if(cpt == 50)
         {
             cout << mes << endl; //TODO a remplacer par un envois
+            envoi ="partie_rapport>"+this->pseudo+"@"+mes;
             mes = "";
             cpt = 0;
         }
@@ -86,10 +143,11 @@ Employe::~Employe()
 
 int main(int argc, char** argv)
 {
-	Employe* employ=new Employe();
+    Employe* employ=new Employe();
     string donnees = "";
     getline(cin, donnees);
-	employ->Connexion();
-    
-	return 0;
+    employ->Connexion();
+    employ->AuthentificationEmploye();
+    employ->CreationListe();
+    return 0;
 }

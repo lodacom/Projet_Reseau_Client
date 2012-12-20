@@ -18,16 +18,19 @@ public:
 	~Employe();
     string Analyse(string);
     void Connexion();
-	void AuthentificationEmploye();
-    void VerificationEstDansListe();
+    void CreationListe();
+    void AuthentificationEmploye();
     void RedigeRapport();
+    void envoieRapport(string);
     void RecuperationRapport();
     void Deconnexion();
     void RedigeRapport(string);
-    void PassageMessage(string);
+    void DemandeListeRapportFait();
+    void DemandeRapportParticulier(string);
 public:
     char recu[100];
     vector<string> liste_employe;
+    string pseudo;
 };
 
 #endif /* EMPLOYE_H_ */
