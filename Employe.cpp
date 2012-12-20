@@ -8,8 +8,7 @@
 #include "Employe.h"
 #include <iostream>
 #include <stdio.h>
-#include "sock.h"
-#include "sockdist.h"
+
 
 Employe::Employe()
 {
@@ -17,9 +16,9 @@ Employe::Employe()
     /*SockDist Expd("127.0.0.1",31467);//changer par adresse
 	Sock BRlocal(SOCK_STREAM, 31466, 0);//pour autotest 31466/31467
 	
-	int destLocal = BRlocal.getsDesc();
+	this->destLocal = BRlocal.getsDesc();
     
-	sockaddr_in* adresseExp = Expd.getAdrDist();*/
+    this->adresseExp = Expd.getAdrDist();*/
 }
 
 string Employe::Analyse(string p_message)
@@ -40,11 +39,12 @@ string Employe::Analyse(string p_message)
     printf("On décide de ce qu'on va faire\n");
     if (action.compare("connexion_controleur")==0)
     {
+        this->CreationListe();
         return "controleur";
     }
     if (action.compare("connexion_employe")==0)
     {
-        RedigeRapport();
+        this->RedigeRapport();
         return "employe";
     }
     if (action.compare("connexion_refuse")==0)
@@ -61,6 +61,7 @@ string Employe::Analyse(string p_message)
     }
     if(action.compare("deconnexion")==0)
     {
+        this->Deconnexion();
         return "deconnexion";
     }
     return "impossible";
@@ -69,7 +70,7 @@ string Employe::Analyse(string p_message)
 bool Employe::Connexion()
 {
     printf("Je me connecte au serveur ...\n");
-    /*this->descripteur_client = connect(destLocal,(struct sockaddr *) adresseExp,sizeof(*adresseExp));*/
+    /*this->descripteur_client = connect(this->destLocal,(struct sockaddr *) adresseExp,sizeof(*adresseExp));*/
     return true;
 }
 
@@ -97,6 +98,32 @@ void Employe::CreationListe()
     printf("Liste terminée ! \n");
 }
 
+void Employe::ChoixControleur()
+{
+    cout << "Plusieurs possibilités sont à votre dispositions (saisissez celui qui vous convient)" << endl;
+    cout << "1. Consulter la liste des employés qui ont fait leur rapport" << endl;
+    cout << "2. Consulter le rapport d'un employé" << endl;
+    cout << "3. Vous déconnectez" << endl;
+    int choix=0;
+    cin >> choix;
+    while (choix!=3)
+    {
+        switch (choix)
+        {
+            case 1:
+                this->DemandeListeRapportFait();
+                break;
+                
+            case 2:
+                cout << "Saisissez l'employé dont vous voulez consultez le rapport" << endl;
+                string p_pseudo;
+                getline(cin,p_pseudo);
+                this->DemandeRapportParticulier(p_pseudo);
+        }
+    }
+    string deconnexion="deconnexion>";
+}
+
 void Employe::DemandeListeRapportFait()
 {
     string demande_liste="demande_liste_rapport_fait>";
@@ -119,11 +146,11 @@ void Employe::RedigeRapport()
     getline(cin,rapport);
     while(rapport.compare("fin")!=0)
     {
+        printf("Saisissez votre rapport sections par sections\n");
         this->EnvoieRapport(rapport);
         getline(cin,rapport);
     }
     printf("Votre rapport est terminé ! Vous allez être déconnecté \n");
-    this->Deconnexion();
 }
 
 void Employe::EnvoieRapport(string donnees)
@@ -137,18 +164,22 @@ void Employe::EnvoieRapport(string donnees)
         cpt++;
         if(cpt == 50)
         {
-            cout << mes << endl; //TODO a remplacer par un envois
+            //cout << mes << endl; //TODO a remplacer par un envois
             envoi ="partie_rapport>"+this->pseudo+"@"+mes;
             mes = "";
             cpt = 0;
         }
     }
-    cout << mes << endl;
+   // cout << mes << endl;
 }
 
 void Employe::Deconnexion()
 {
-    
+    /*
+     close(this->descripteur_client);
+     close(this->destLocal);
+     */
+    cout << "l'employé se déconnecte" << endl;
 }
 
 Employe::~Employe()
@@ -162,7 +193,14 @@ int main(int argc, char** argv)
     if (employ->Connexion())
     {
         employ->AuthentificationEmploye();
-        employ->CreationListe();
+        string message;
+        cout << "Saisissez une trame à tester" << endl;
+        getline(cin,message);
+        while (employ->Analyse(message).compare("deconnexion")!=0)
+        {
+            cout << "Saisissez une trame à tester" << endl;
+            getline(cin,message);
+        }
     }
     else
     {
