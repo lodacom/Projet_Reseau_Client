@@ -9,15 +9,6 @@
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>AnalyseurTrame</Name>
-      <APILanguage>c</APILanguage>
-      <Type>cl</Type>
-      <Scope>AnalyseurTrame</Scope>
-    </TokenIdentifier>
-    <Path>class_analyseur_trame.html</Path>
-  </Token>
-  <Token>
-    <TokenIdentifier>
       <Name>Employe</Name>
       <APILanguage>c</APILanguage>
       <Type>cl</Type>

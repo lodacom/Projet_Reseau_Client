@@ -18,52 +18,6 @@
           <Path>annotated.html</Path>
           <Subnodes>
            <Node>
-            <Name>AnalyseurTrame</Name>
-            <Path>class_analyseur_trame.html</Path>
-            <Subnodes>
-             <Node>
-              <Name>AnalyseurTrame</Name>
-              <Path>class_analyseur_trame.html</Path>
-              <Anchor>abe62cc4a2f68bd1c1d777363e2b4cb65</Anchor>
-             </Node>
-             <Node>
-              <Name>~AnalyseurTrame</Name>
-              <Path>class_analyseur_trame.html</Path>
-              <Anchor>ac09780ac1e31242d8cd3208e547cf8fe</Anchor>
-             </Node>
-             <Node>
-              <Name>Analyse</Name>
-              <Path>class_analyseur_trame.html</Path>
-              <Anchor>a8236101e93db0b93abc848315bb12fbe</Anchor>
-             </Node>
-             <Node>
-              <Name>DecisionAction</Name>
-              <Path>class_analyseur_trame.html</Path>
-              <Anchor>a9ee7cc0d9acef398628fdbfbdd161420</Anchor>
-             </Node>
-             <Node>
-              <Name>action</Name>
-              <Path>class_analyseur_trame.html</Path>
-              <Anchor>a82fca98128bc8353d4859e2a6f5c9b45</Anchor>
-             </Node>
-             <Node>
-              <Name>message</Name>
-              <Path>class_analyseur_trame.html</Path>
-              <Anchor>ace662efeeda426d04365efa4e8618d9a</Anchor>
-             </Node>
-             <Node>
-              <Name>tp</Name>
-              <Path>class_analyseur_trame.html</Path>
-              <Anchor>a92ecc1f6adb0d26bf21e7e6575107a74</Anchor>
-             </Node>
-             <Node>
-              <Name>transmission</Name>
-              <Path>class_analyseur_trame.html</Path>
-              <Anchor>a047e28d9030a06ff379c7febb63432aa</Anchor>
-             </Node>
-            </Subnodes>
-           </Node>
-           <Node>
             <Name>Employe</Name>
             <Path>class_employe.html</Path>
             <Subnodes>
@@ -76,6 +30,11 @@
               <Name>~Employe</Name>
               <Path>class_employe.html</Path>
               <Anchor>a26352cdb9bb32367e53e6e356a40e961</Anchor>
+             </Node>
+             <Node>
+              <Name>Analyse</Name>
+              <Path>class_employe.html</Path>
+              <Anchor>aefaf8b63319291c5d557583f62c234a9</Anchor>
              </Node>
              <Node>
               <Name>AuthentificationEmploye</Name>
@@ -116,6 +75,11 @@
               <Name>VerificationEstDansListe</Name>
               <Path>class_employe.html</Path>
               <Anchor>af2c0ffa01a31c4fc7399f304609358af</Anchor>
+             </Node>
+             <Node>
+              <Name>liste_employe</Name>
+              <Path>class_employe.html</Path>
+              <Anchor>ad35ecaa896328b976804d3f283e0a4ac</Anchor>
              </Node>
              <Node>
               <Name>recu</Name>
@@ -217,10 +181,6 @@
           <Name>Liste des fichiers</Name>
           <Path>files.html</Path>
           <Subnodes>
-           <Node>
-            <Name>AnalyseurTrame.h</Name>
-            <Path>_analyseur_trame_8h_source.html</Path>
-           </Node>
            <Node>
             <Name>Employe.h</Name>
             <Path>_employe_8h_source.html</Path>
