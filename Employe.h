@@ -17,11 +17,11 @@ public:
 	Employe();
 	~Employe();
     string Analyse(string);
-    void Connexion();
+    bool Connexion();
     void CreationListe();
     void AuthentificationEmploye();
     void RedigeRapport();
-    void envoieRapport(string);
+    void EnvoieRapport(string);
     void RecuperationRapport();
     void Deconnexion();
     void RedigeRapport(string);
@@ -31,6 +31,7 @@ public:
     char recu[100];
     vector<string> liste_employe;
     string pseudo;
+    int descripteur_client;
 };
 
 #endif /* EMPLOYE_H_ */

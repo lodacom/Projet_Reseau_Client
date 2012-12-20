@@ -8,10 +8,18 @@
 #include "Employe.h"
 #include <iostream>
 #include <stdio.h>
+#include "sock.h"
+#include "sockdist.h"
 
 Employe::Employe()
 {
 	// TODO Auto-generated constructor stub
+    /*SockDist Expd("127.0.0.1",31467);//changer par adresse
+	Sock BRlocal(SOCK_STREAM, 31466, 0);//pour autotest 31466/31467
+	
+	int destLocal = BRlocal.getsDesc();
+    
+	sockaddr_in* adresseExp = Expd.getAdrDist();*/
 }
 
 string Employe::Analyse(string p_message)
@@ -58,14 +66,16 @@ string Employe::Analyse(string p_message)
     return "impossible";
 }
 
-void Employe::Connexion()
+bool Employe::Connexion()
 {
     printf("Je me connecte au serveur ...\n");
+    /*this->descripteur_client = connect(destLocal,(struct sockaddr *) adresseExp,sizeof(*adresseExp));*/
+    return true;
 }
 
 void Employe::AuthentificationEmploye()
 {
-    printf("Saisissez votre pseudo pour vous authentifiez, Tappez\n");
+    printf("Saisissez votre pseudo pour vous authentifiez\n");
     string message;
     getline(cin,message);
     this->pseudo = message;
@@ -109,14 +119,14 @@ void Employe::RedigeRapport()
     getline(cin,rapport);
     while(rapport.compare("fin")!=0)
     {
-    envoieRapport(rapport);
-    getline(cin,rapport);
+        this->EnvoieRapport(rapport);
+        getline(cin,rapport);
     }
     printf("Votre rapport est terminé ! Vous allez être déconnecté \n");
-    Deconnexion();
+    this->Deconnexion();
 }
 
-void Employe::envoieRapport(string donnees)
+void Employe::EnvoieRapport(string donnees)
 {
     int cpt = 0;
     string mes = "";
@@ -136,6 +146,11 @@ void Employe::envoieRapport(string donnees)
     cout << mes << endl;
 }
 
+void Employe::Deconnexion()
+{
+    
+}
+
 Employe::~Employe()
 {
 	// TODO Auto-generated destructor stub
@@ -144,10 +159,14 @@ Employe::~Employe()
 int main(int argc, char** argv)
 {
     Employe* employ=new Employe();
-    string donnees = "";
-    getline(cin, donnees);
-    employ->Connexion();
-    employ->AuthentificationEmploye();
-    employ->CreationListe();
+    if (employ->Connexion())
+    {
+        employ->AuthentificationEmploye();
+        employ->CreationListe();
+    }
+    else
+    {
+        cout << "Problème de connexion au serveur" << endl;
+    }
     return 0;
 }
