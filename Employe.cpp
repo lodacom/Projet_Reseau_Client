@@ -11,7 +11,9 @@
 #include "sauvegarde.c"
 #include "sauvegarde.h"
 
-
+/**
+* \brief Fonction permettant d'initialisé le client 
+*/
 Employe::Employe()
 {
     // TODO Auto-generated constructor stub
@@ -23,6 +25,12 @@ Employe::Employe()
     this->adresseExp = Expd.getAdrDist();*/
 }
 
+/**
+ * \fn string Analyse(string p_message)
+ * \brief Permet d'analyser ce qui arrive dans la trame que l'on a reçu 
+ * \param string p_message
+ * \return une string correspondant à ce qu'on veut renvoyer
+ */
 string Employe::Analyse(string p_message)
 {
     //recv(this->destLocal,recu,sizeof recu, 0);
@@ -87,6 +95,12 @@ string Employe::Analyse(string p_message)
     return "impossible";
 }
 
+/**
+ * \fn bool Connexion()
+ * \brief On essaie de connecter le client au serveur
+ * s'il on n'y arrive pas on essaie en boucle
+ * \return vrai quand on est connecté
+ */
 bool Employe::Connexion()
 {
     printf("Je me connecte au serveur ...\n");
@@ -100,6 +114,10 @@ bool Employe::Connexion()
     return true;
 }
 
+/**
+ * \brief Permet au client de s'authentifier avec un 
+ * pseudo
+ */
 void Employe::AuthentificationEmploye()
 {
     string message;
@@ -116,6 +134,10 @@ void Employe::AuthentificationEmploye()
     //send(this->adresseExp,envoi,sizeof(envoi),0);
 }
 
+/**
+ * \brief Permet au controleur de créer la liste
+ * des employés qui vont écrire les rapports
+ */
 void Employe::CreationListe()
 {
     string pseudo_liste;
@@ -132,6 +154,13 @@ void Employe::CreationListe()
     printf("Liste terminée ! \n");
 }
 
+/**
+ * \brief Permet au controleur d'effectuer un choix
+ * -Soit obtenir la liste des employés qui ont fait
+ * leur rapport
+ * -Soit de consulter le rapport d'un employé
+ * -Soit de se déconnecter
+ */
 void Employe::ChoixControleur()
 {
     string p_pseudo;
@@ -162,6 +191,10 @@ void Employe::ChoixControleur()
      //send(this->adresseExp,envoi,sizeof(envoi),0);
 }
 
+/**
+ * \brief Envoie la demande de liste des 
+ * rapports qui ont été fait 
+ */
 void Employe::DemandeListeRapportFait()
 {
     string demande_liste="demande_liste_rapport_fait>";
@@ -169,6 +202,10 @@ void Employe::DemandeListeRapportFait()
     // TO DO : envoi de la trame au serveur
 }
 
+/**
+ * \brief Envoie la demande d'obtention d'un rapport
+ * d'un employé
+ */
 void Employe::DemandeRapportParticulier(string pseudo)
 {
     string demande_rapport="demande_rapport>"+pseudo;
@@ -176,6 +213,12 @@ void Employe::DemandeRapportParticulier(string pseudo)
     // TO DO : envoi de de la trame au serveur
 }
 
+/**
+ * \brief Permet à un client de rédiger un rapport
+ * et de l'envoyer puis le déconnecte automatiquement
+ * dès qu'il a valider son rapport avec le mot clé:
+ * "fin"
+ */
 void Employe::RedigeRapport()
 {
     printf("Saisissez votre rapport sections par sections\n");
@@ -184,8 +227,8 @@ void Employe::RedigeRapport()
     getline(cin,rapport);
     while(rapport.compare("fin")!=0)
     {
-        printf("Saisissez votre rapport sections par sections\n");
         this->EnvoieRapport(rapport);
+        printf("Saisissez votre rapport sections par sections\n");
         getline(cin,rapport);
     }
     printf("Votre rapport est terminé ! Vous allez être déconnecté \n");
@@ -193,6 +236,10 @@ void Employe::RedigeRapport()
      //send(this->adresseExp,envoi,sizeof(envoi),0);
 }
 
+/**
+ * \brief Permet d'envoyer le rapport en le découpant
+ * en partie de 100 caractères
+ */
 void Employe::EnvoieRapport(string donnees)
 {
     int cpt = 0;
@@ -214,6 +261,9 @@ void Employe::EnvoieRapport(string donnees)
    // cout << mes << endl;
 }
 
+/**
+ * \brief On déconnecte le client
+ */
 void Employe::Deconnexion()
 {
     /*
@@ -228,6 +278,9 @@ Employe::~Employe()
 	// TODO Auto-generated destructor stub
 }
 
+/**
+ * \brief Point d'entrer principal du programme
+ */
 int main(int argc, char** argv)
 {
     Employe* employ=new Employe();

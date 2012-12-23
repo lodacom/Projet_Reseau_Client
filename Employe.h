@@ -16,8 +16,8 @@ using namespace std;
 class Employe
 {
 public:
-	Employe();
-	~Employe();
+    Employe();
+    ~Employe();
     string Analyse(string);
     bool Connexion();
     void CreationListe();
@@ -35,6 +35,7 @@ public:
     char envoi[100];
     vector<string> liste_employe;
     string pseudo;
+    string recuperation_rapport;
     int descripteur_client;
     int destLocal;
     sockaddr_in* adresseExp;
