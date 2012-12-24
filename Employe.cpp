@@ -258,6 +258,8 @@ void Employe::EnvoieRapport(string donnees)
             cpt = 0;
         }
     }
+    envoi="fin_section>"+this->pseudo;
+    //send(this->adresseExp,envoi,sizeof(envoi),0);
    // cout << mes << endl;
 }
 
