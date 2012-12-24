@@ -2,10 +2,13 @@
 <Tokens version="1.0">
   <Token>
     <TokenIdentifier>
-      <Name>md_README</Name>
-      <APILanguage>markdown</APILanguage>
+      <Name>main</Name>
+      <APILanguage>c</APILanguage>
+      <Type>func</Type>
     </TokenIdentifier>
-    <Path>md__r_e_a_d_m_e.html</Path>
+    <Path>_employe_8cpp.html</Path>
+    <Anchor>a3c04138a5bfe5d72780bb7e82a18e627</Anchor>
+    <Abstract>Point d&amp;#39;entrer principal du programme.</Abstract>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -15,6 +18,105 @@
       <Scope>Employe</Scope>
     </TokenIdentifier>
     <Path>class_employe.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>Employe</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>Employe</Scope>
+    </TokenIdentifier>
+    <Path>class_employe.html</Path>
+    <Anchor>a8b38bbb4289f3f7b66c4d11b420fb27b</Anchor>
+    <Abstract>Fonction permettant d&amp;#39;initialisé le client.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>CreationListe</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>Employe</Scope>
+    </TokenIdentifier>
+    <Path>class_employe.html</Path>
+    <Anchor>adb7b87de03816ae56db8b3e56e5907d6</Anchor>
+    <Abstract>Permet au controleur de créer la liste des employés qui vont écrire les rapports.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>AuthentificationEmploye</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>Employe</Scope>
+    </TokenIdentifier>
+    <Path>class_employe.html</Path>
+    <Anchor>aaef2ea495679ab80403b116e4618b4e8</Anchor>
+    <Abstract>Permet au client de s&amp;#39;authentifier avec un pseudo.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ChoixControleur</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>Employe</Scope>
+    </TokenIdentifier>
+    <Path>class_employe.html</Path>
+    <Anchor>a8e2d2bc84c72f331a8d46b1eed82855f</Anchor>
+    <Abstract>Permet au controleur d&amp;#39;effectuer un choix.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>RedigeRapport</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>Employe</Scope>
+    </TokenIdentifier>
+    <Path>class_employe.html</Path>
+    <Anchor>a1334cc9524ed8018b3addb456e855d7c</Anchor>
+    <Abstract>Permet à un client de rédiger un rapport et de l&amp;#39;envoyer puis le déconnecte automatiquement dès qu&amp;#39;il...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>EnvoieRapport</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>Employe</Scope>
+    </TokenIdentifier>
+    <Path>class_employe.html</Path>
+    <Anchor>af06334bbd7bede0c1aba369fae38c976</Anchor>
+    <Abstract>Permet d&amp;#39;envoyer le rapport en le découpant en partie de 100 caractères.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>Deconnexion</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>Employe</Scope>
+    </TokenIdentifier>
+    <Path>class_employe.html</Path>
+    <Anchor>a8c8fd0b2b74e124fd8df67660f0a5ae9</Anchor>
+    <Abstract>On déconnecte le client.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>DemandeListeRapportFait</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>Employe</Scope>
+    </TokenIdentifier>
+    <Path>class_employe.html</Path>
+    <Anchor>ad22a2e810ba9abebd7a157c5b50981f8</Anchor>
+    <Abstract>Envoie la demande de liste des rapports qui ont été fait.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>DemandeRapportParticulier</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>Employe</Scope>
+    </TokenIdentifier>
+    <Path>class_employe.html</Path>
+    <Anchor>ac622094a90202336d5357d27615edf33</Anchor>
+    <Abstract>Envoie la demande d&amp;#39;obtention d&amp;#39;un rapport d&amp;#39;un employé</Abstract>
   </Token>
   <Token>
     <TokenIdentifier>

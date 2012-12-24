@@ -5,16 +5,9 @@
       <Name>Root</Name>
       <Path>index.html</Path>
       <Subnodes>
-       <Node>
-        <Name>README</Name>
-        <Path>md__r_e_a_d_m_e.html</Path>
-       </Node>
-       <Node>
-        <Name>Classes</Name>
-        <Path></Path>
         <Subnodes>
          <Node>
-          <Name>Liste des classes</Name>
+          <Name>Class List</Name>
           <Path>annotated.html</Path>
           <Subnodes>
            <Node>
@@ -42,9 +35,19 @@
               <Anchor>aaef2ea495679ab80403b116e4618b4e8</Anchor>
              </Node>
              <Node>
+              <Name>ChoixControleur</Name>
+              <Path>class_employe.html</Path>
+              <Anchor>a8e2d2bc84c72f331a8d46b1eed82855f</Anchor>
+             </Node>
+             <Node>
               <Name>Connexion</Name>
               <Path>class_employe.html</Path>
-              <Anchor>ab133ea7f87ed1fe42f84b9b733567722</Anchor>
+              <Anchor>a3e6e9f9a6562bd3a6c666f3a20b01182</Anchor>
+             </Node>
+             <Node>
+              <Name>CreationListe</Name>
+              <Path>class_employe.html</Path>
+              <Anchor>adb7b87de03816ae56db8b3e56e5907d6</Anchor>
              </Node>
              <Node>
               <Name>Deconnexion</Name>
@@ -52,14 +55,19 @@
               <Anchor>a8c8fd0b2b74e124fd8df67660f0a5ae9</Anchor>
              </Node>
              <Node>
-              <Name>PassageMessage</Name>
+              <Name>DemandeListeRapportFait</Name>
               <Path>class_employe.html</Path>
-              <Anchor>afa2e71f67f5e1a0f86cf2b7004a46546</Anchor>
+              <Anchor>ad22a2e810ba9abebd7a157c5b50981f8</Anchor>
              </Node>
              <Node>
-              <Name>RecuperationRapport</Name>
+              <Name>DemandeRapportParticulier</Name>
               <Path>class_employe.html</Path>
-              <Anchor>ad9b36ebdafb48129b90c51f4f40d3e75</Anchor>
+              <Anchor>ac622094a90202336d5357d27615edf33</Anchor>
+             </Node>
+             <Node>
+              <Name>EnvoieRapport</Name>
+              <Path>class_employe.html</Path>
+              <Anchor>af06334bbd7bede0c1aba369fae38c976</Anchor>
              </Node>
              <Node>
               <Name>RedigeRapport</Name>
@@ -67,14 +75,24 @@
               <Anchor>a1334cc9524ed8018b3addb456e855d7c</Anchor>
              </Node>
              <Node>
-              <Name>RedigeRapport</Name>
+              <Name>adresseExp</Name>
               <Path>class_employe.html</Path>
-              <Anchor>a9613d44ee61044ddd8b107f8d31bf18e</Anchor>
+              <Anchor>ae20cb73062bcf179ce247ad907704cc6</Anchor>
              </Node>
              <Node>
-              <Name>VerificationEstDansListe</Name>
+              <Name>descripteur_client</Name>
               <Path>class_employe.html</Path>
-              <Anchor>af2c0ffa01a31c4fc7399f304609358af</Anchor>
+              <Anchor>a38c458125e6a925bf67ef39a4eadc4d8</Anchor>
+             </Node>
+             <Node>
+              <Name>destLocal</Name>
+              <Path>class_employe.html</Path>
+              <Anchor>a45a2230cf849bac754baca8a40d79562</Anchor>
+             </Node>
+             <Node>
+              <Name>envoi</Name>
+              <Path>class_employe.html</Path>
+              <Anchor>a08e625d3232ed47d8cf1a86ac1492b8f</Anchor>
              </Node>
              <Node>
               <Name>liste_employe</Name>
@@ -82,9 +100,19 @@
               <Anchor>ad35ecaa896328b976804d3f283e0a4ac</Anchor>
              </Node>
              <Node>
+              <Name>pseudo</Name>
+              <Path>class_employe.html</Path>
+              <Anchor>a7ff9dbe81b9a1906b547f02357839fad</Anchor>
+             </Node>
+             <Node>
               <Name>recu</Name>
               <Path>class_employe.html</Path>
               <Anchor>a7a87458ff5c63d80a89a1c788938bd0b</Anchor>
+             </Node>
+             <Node>
+              <Name>recuperation_rapport</Name>
+              <Path>class_employe.html</Path>
+              <Anchor>ab26b99110c9686283bfdf2415b2f7fd5</Anchor>
              </Node>
             </Subnodes>
            </Node>
@@ -168,30 +196,57 @@
           </Subnodes>
          </Node>
          <Node>
-          <Name>Index des classes</Name>
+          <Name>Class Index</Name>
           <Path>classes.html</Path>
          </Node>
+         <Node>
+          <Name>Class Members</Name>
+          <Path>functions.html</Path>
+          <Subnodes>
+           <Node>
+            <Name>All</Name>
+            <Path>functions.html</Path>
+           </Node>
+           <Node>
+            <Name>Functions</Name>
+            <Path>functions_func.html</Path>
+           </Node>
+          </Subnodes>
+         </Node>
         </Subnodes>
-       </Node>
-       <Node>
-        <Name>Fichiers</Name>
-        <Path></Path>
         <Subnodes>
          <Node>
-          <Name>Liste des fichiers</Name>
+          <Name>File List</Name>
           <Path>files.html</Path>
           <Subnodes>
            <Node>
+            <Name>Employe.cpp</Name>
+            <Path>_employe_8cpp.html</Path>
+            <Subnodes>
+             <Node>
+              <Name>main</Name>
+              <Path>_employe_8cpp.html</Path>
+              <Anchor>a3c04138a5bfe5d72780bb7e82a18e627</Anchor>
+             </Node>
+            </Subnodes>
+           </Node>
+           <Node>
             <Name>Employe.h</Name>
-            <Path>_employe_8h_source.html</Path>
+            <Path>_employe_8h.html</Path>
+           </Node>
+          </Subnodes>
+         </Node>
+         <Node>
+          <Name>File Members</Name>
+          <Path>globals.html</Path>
+          <Subnodes>
+           <Node>
+            <Name>All</Name>
+            <Path>globals.html</Path>
            </Node>
            <Node>
-            <Name>sock.h</Name>
-            <Path>sock_8h_source.html</Path>
-           </Node>
-           <Node>
-            <Name>sockdist.h</Name>
-            <Path>sockdist_8h_source.html</Path>
+            <Name>Functions</Name>
+            <Path>globals_func.html</Path>
            </Node>
           </Subnodes>
          </Node>
