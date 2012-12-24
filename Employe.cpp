@@ -1,15 +1,18 @@
-/*
- * Employe.cpp
+/*!
+ * \file Employe.cpp
+ * \brief Programme permettant de lancer le client
+ * \authors Duplouy Olivier, Burc Pierre
+ * \version 1.0
+ * \date 24 décembre 2012
  *
- *  Created on: 7 déc. 2012
- *      Author: Lolo
+ * Enregistrement de rapports d'activité dans une entreprise
+ *
  */
 
 #include "Employe.h"
 #include <iostream>
 #include <stdio.h>
 #include "sauvegarde.c"
-#include "sauvegarde.h"
 
 /**
 * \brief Fonction permettant d'initialisé le client 
@@ -17,12 +20,12 @@
 Employe::Employe()
 {
     // TODO Auto-generated constructor stub
-    /*SockDist Expd("127.0.0.1",31467);//changer par adresse
+    SockDist Expd("127.0.0.1",31467);//changer par adresse
     Sock BRlocal(SOCK_STREAM, 31466, 0);//pour autotest 31466/31467
 
     this->destLocal = BRlocal.getsDesc();
 
-    this->adresseExp = Expd.getAdrDist();*/
+    this->adresseExp = Expd.getAdrDist();
 }
 
 /**
@@ -31,11 +34,12 @@ Employe::Employe()
  * \param string p_message
  * \return une string correspondant à ce qu'on veut renvoyer
  */
-string Employe::Analyse(string p_message)
+string Employe::Analyse()
 {
-    //recv(this->destLocal,recu,sizeof recu, 0);
-    //char* message=recu;
-    //string inter=this->message;
+    recv(this->destLocal,recu,sizeof recu, 0);
+    char* message=recu;
+    string p_message=message;
+    
     printf("Analyse de la trame...\n");
     int i=0;
     while(i<p_message.length() and p_message.at(i)!='>')
@@ -47,6 +51,11 @@ string Employe::Analyse(string p_message)
     cout << "La trame a été analysée avec action: "<< action << " et message: " << transmission << endl;
 
     printf("On décide de ce qu'on va faire\n");
+    if (action.compare("reponse")==0)
+    {
+        cout << transmission << endl;
+        return "reponse";
+    }
     if (action.compare("connexion_controleur")==0)
     {
         this->CreationListe();
@@ -75,13 +84,12 @@ string Employe::Analyse(string p_message)
     if (action.compare("fin_transfert")==0)
     {
         Ecrit(this->recuperation_rapport.c_str(),transmission.c_str());
-        OuvreRapport(transmission.c_str());
+        this->recuperation_rapport="";
     }
     if(action.compare("deconnexion")==0)
     {
         if (transmission.compare("controleur")!=0)
         {
-            Ecrit(this->recuperation_rapport.c_str(),transmission.c_str());
             OuvreRapport(transmission.c_str());
         }
         this->Deconnexion();
@@ -104,13 +112,12 @@ string Employe::Analyse(string p_message)
 bool Employe::Connexion()
 {
     printf("Je me connecte au serveur ...\n");
-    /*this->descripteur_client = connect(this->destLocal,(struct sockaddr *) adresseExp,sizeof(*adresseExp));
-     * while (this->descripteur_client!=0)
-     * {
-     *          this->descripteur_client = connect(this->destLocal,(struct sockaddr *) adresseExp,sizeof(*adresseExp));
-     * }
-     * this->AuthentificationEmploye();
-     */
+    this->descripteur_client = connect(this->destLocal,(struct sockaddr *) adresseExp,sizeof(*adresseExp));
+    while (this->descripteur_client!=0)
+    {
+        this->descripteur_client = connect(this->destLocal,(struct sockaddr *) adresseExp,sizeof(*adresseExp));
+    }
+    this->AuthentificationEmploye();
     return true;
 }
 
@@ -131,7 +138,7 @@ void Employe::AuthentificationEmploye()
     this->pseudo = message;
     string connexion = "connexion_employe>"+message;
     //envoie ici
-    //send(this->adresseExp,envoi,sizeof(envoi),0);
+    send(this->destLocal,(const void *)connexion.c_str(),sizeof(connexion),0);
 }
 
 /**
@@ -148,7 +155,7 @@ void Employe::CreationListe()
     while(pseudo_liste.compare("fini")!=0)
     {
         envoi_pseudo_liste = "ajout_employe>"+pseudo_liste; //TO DO envoi du pseudo
-         //send(this->adresseExp,envoi,sizeof(envoi),0);
+        send(this->destLocal,(const void *)envoi_pseudo_liste.c_str(),sizeof(envoi_pseudo_liste),0);
         getline(cin,pseudo_liste);
     }
     printf("Liste terminée ! \n");
@@ -188,7 +195,7 @@ void Employe::ChoixControleur()
         }
     }
     string deconnexion="deconnexion>"+this->pseudo;
-     //send(this->adresseExp,envoi,sizeof(envoi),0);
+    send(this->destLocal,(const void *)deconnexion.c_str(),sizeof(deconnexion),0);
 }
 
 /**
@@ -198,7 +205,7 @@ void Employe::ChoixControleur()
 void Employe::DemandeListeRapportFait()
 {
     string demande_liste="demande_liste_rapport_fait>";
-     //send(this->adresseExp,envoi,sizeof(envoi),0);
+    send(this->destLocal,(const void *)demande_liste.c_str(),sizeof(demande_liste),0);
     // TO DO : envoi de la trame au serveur
 }
 
@@ -209,7 +216,7 @@ void Employe::DemandeListeRapportFait()
 void Employe::DemandeRapportParticulier(string pseudo)
 {
     string demande_rapport="demande_rapport>"+pseudo;
-     //send(this->adresseExp,envoi,sizeof(envoi),0);
+    send(this->destLocal,(const void *)demande_rapport.c_str(),sizeof(demande_rapport),0);
     // TO DO : envoi de de la trame au serveur
 }
 
@@ -233,7 +240,7 @@ void Employe::RedigeRapport()
     }
     printf("Votre rapport est terminé ! Vous allez être déconnecté \n");
     string deconnexion="deconnexion>"+this->pseudo;
-     //send(this->adresseExp,envoi,sizeof(envoi),0);
+    send(this->destLocal,(const void *)deconnexion.c_str(),sizeof(deconnexion),0);
 }
 
 /**
@@ -253,13 +260,13 @@ void Employe::EnvoieRapport(string donnees)
         {
             //cout << mes << endl; //TODO a remplacer par un envois
             envoi ="partie_rapport>"+this->pseudo+"@"+mes;
-            //send(this->adresseExp,envoi,sizeof(envoi),0);
+            send(this->destLocal,(const void *)envoi.c_str(),sizeof(envoi),0);
             mes = "";
             cpt = 0;
         }
     }
     envoi="fin_section>"+this->pseudo;
-    //send(this->adresseExp,envoi,sizeof(envoi),0);
+    send(this->destLocal,(const void *)envoi.c_str(),sizeof(envoi),0);
    // cout << mes << endl;
 }
 
@@ -268,10 +275,8 @@ void Employe::EnvoieRapport(string donnees)
  */
 void Employe::Deconnexion()
 {
-    /*
-     close(this->descripteur_client);
-     close(this->destLocal);
-     */
+    close(this->descripteur_client);
+    close(this->destLocal);
     cout << "l'employé se déconnecte" << endl;
 }
 
@@ -289,13 +294,13 @@ int main(int argc, char** argv)
     if (employ->Connexion())
     {
         employ->AuthentificationEmploye();
-        string message;
+       /* string message;
         cout << "Saisissez une trame à tester" << endl;
-        getline(cin,message);
-        while (employ->Analyse(message).compare("deconnexion")!=0)
+        getline(cin,message);*/
+        while (employ->Analyse().compare("deconnexion")!=0)
         {
-            cout << "Saisissez une trame à tester" << endl;
-            getline(cin,message);
+            /*cout << "Saisissez une trame à tester" << endl;
+            getline(cin,message);*/
         }
     }
     else
