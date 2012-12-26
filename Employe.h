@@ -1,8 +1,12 @@
-/*
- * Employe.h
+/*!
+ * \file Employe.h
+ * \brief Fichier header pour l'employé 
+ * \authors Duplouy Olivier, Burc Pierre
+ * \version 1.0
+ * \date 24 décembre 2012
  *
- *  Created on: 7 déc. 2012
- *      Author: Lolo
+ * Enregistrement de rapports d'activité dans une entreprise
+ *
  */
 
 #ifndef EMPLOYE_H_
@@ -18,16 +22,14 @@ class Employe
 public:
     Employe();
     ~Employe();
-    string Analyse(string);
+    string Analyse();
     bool Connexion();
     void CreationListe();
     void AuthentificationEmploye();
     void ChoixControleur();
     void RedigeRapport();
     void EnvoieRapport(string);
-    void RecuperationRapport();
     void Deconnexion();
-    void RedigeRapport(string);
     void DemandeListeRapportFait();
     void DemandeRapportParticulier(string);
 public:

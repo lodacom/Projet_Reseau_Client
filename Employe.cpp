@@ -13,6 +13,7 @@
 #include <iostream>
 #include <stdio.h>
 #include "sauvegarde.c"
+#include <errno.h>
 
 /**
 * \brief Fonction permettant d'initialisé le client 
@@ -20,6 +21,7 @@
 Employe::Employe()
 {
     // TODO Auto-generated constructor stub
+    this->descripteur_client=-1;
     SockDist Expd("127.0.0.1",31467);//changer par adresse
     Sock BRlocal(SOCK_STREAM, 31466, 0);//pour autotest 31466/31467
 
@@ -40,7 +42,7 @@ string Employe::Analyse()
     char* message=recu;
     string p_message=message;
     
-    printf("Analyse de la trame...\n");
+    cout << "Analyse de la trame..." << endl;
     int i=0;
     while(i<p_message.length() and p_message.at(i)!='>')
     {
@@ -113,12 +115,17 @@ bool Employe::Connexion()
 {
     printf("Je me connecte au serveur ...\n");
     this->descripteur_client = connect(this->destLocal,(struct sockaddr *) adresseExp,sizeof(*adresseExp));
-    while (this->descripteur_client!=0)
+    if (this->descripteur_client!=0)
     {
         this->descripteur_client = connect(this->destLocal,(struct sockaddr *) adresseExp,sizeof(*adresseExp));
+        perror("On a pas pu se connecter");
+        return false;
     }
-    this->AuthentificationEmploye();
-    return true;
+    else
+    {
+        this->AuthentificationEmploye();
+        return true;  
+    }
 }
 
 /**
@@ -137,10 +144,16 @@ void Employe::AuthentificationEmploye()
     }
     this->pseudo = message;
     string connexion = "connexion_employe>"+message;
-    //envoie ici
-    send(this->destLocal,(const void *)connexion.c_str(),sizeof(connexion),0);
+    int test=send(this->destLocal,(const void *)connexion.c_str(),sizeof(connexion),0);
+    if (test>=0)
+    {
+        cout<< "Le message a été envoyé" << endl;
+    }
+    else
+    {
+         perror("Erreur d'envoi"); 
+    }
 }
-
 /**
  * \brief Permet au controleur de créer la liste
  * des employés qui vont écrire les rapports
@@ -294,14 +307,13 @@ int main(int argc, char** argv)
     if (employ->Connexion())
     {
         employ->AuthentificationEmploye();
-       /* string message;
-        cout << "Saisissez une trame à tester" << endl;
-        getline(cin,message);*/
+        cout << "On attend la réponse avec l'analyse" << endl;
         while (employ->Analyse().compare("deconnexion")!=0)
         {
             /*cout << "Saisissez une trame à tester" << endl;
             getline(cin,message);*/
         }
+        cout << "On se déconnecte..." << endl;
     }
     else
     {
