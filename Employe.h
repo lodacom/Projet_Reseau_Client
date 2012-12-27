@@ -38,9 +38,9 @@ public:
     vector<string> liste_employe;
     string pseudo;
     string recuperation_rapport;
-    int descripteur_client;
+    /*int test;
     int destLocal;
-    sockaddr_in* adresseExp;
+    sockaddr_in* adresseExp;*/
 };
 
 #endif /* EMPLOYE_H_ */
