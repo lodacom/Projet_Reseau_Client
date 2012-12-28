@@ -31,6 +31,70 @@ int destLocal=-1;
 sockaddr_in* adresseExp;
 
 /**
+ * \brief Envoie la demande de liste des 
+ * rapports qui ont été fait 
+ */
+void DemandeListeRapportFait()
+{
+    string demande_liste="demande_liste_rapport_fait>";
+    send(destLocal,(const void *)demande_liste.c_str(),sizeof(demande_liste),0);
+    // TO DO : envoi de la trame au serveur
+}
+
+/**
+ * \brief Envoie la demande d'obtention d'un rapport
+ * d'un employé
+ */
+void DemandeRapportParticulier(string pseudo)
+{
+    string demande_rapport="demande_rapport>"+pseudo;
+    send(destLocal,(const void *)demande_rapport.c_str(),sizeof(demande_rapport),0);
+    // TO DO : envoi de de la trame au serveur
+}
+
+/**
+ * \brief Permet au controleur d'effectuer un choix
+ * -Soit obtenir la liste des employés qui ont fait
+ * leur rapport
+ * -Soit de consulter le rapport d'un employé
+ * -Soit de se déconnecter
+ */
+void ChoixControleur()
+{
+    string p_pseudo;
+    cout << "Plusieurs possibilités sont à votre dispositions (saisissez celui qui vous convient)" << endl;
+    cout << "1. Consulter la liste des employés qui ont fait leur rapport" << endl;
+    cout << "2. Consulter le rapport d'un employé" << endl;
+    cout << "3. Vous déconnectez" << endl;
+    int choix=0;
+    cin >> choix;
+    while (choix!=3)
+    {
+        switch (choix)
+        {
+            case 1:
+                DemandeListeRapportFait();
+                continue;
+                
+            case 2:
+                cout << "Saisissez l'employé dont vous voulez consultez le rapport" << endl;
+                getline(cin,p_pseudo);
+                DemandeRapportParticulier(p_pseudo);
+                continue;
+            default: cout << "Désolé cette action est inconnue, veuillez recommencer" << endl;
+                continue;
+        }
+        cout << "Plusieurs possibilités sont à votre dispositions (saisissez celui qui vous convient)" << endl;
+        cout << "1. Consulter la liste des employés qui ont fait leur rapport" << endl;
+        cout << "2. Consulter le rapport d'un employé" << endl;
+        cout << "3. Vous déconnectez" << endl;
+        cin >> choix;
+    }
+    string deconnexion="deconnexion>"+pseudo;
+    send(destLocal,(const void *)deconnexion.c_str(),sizeof(deconnexion),0);
+}
+
+/**
  * \brief Permet au controleur de créer la liste
  * des employés qui vont écrire les rapports
  */
@@ -48,6 +112,7 @@ void CreationListe()
         getline(cin,pseudo_liste);
     }
     printf("Liste terminée ! \n");
+    ChoixControleur();
 }
 
 /**
@@ -144,29 +209,6 @@ void AuthentificationEmploye()
 }
 
 /**
- * \brief Envoie la demande de liste des 
- * rapports qui ont été fait 
- */
-void DemandeListeRapportFait()
-{
-    string demande_liste="demande_liste_rapport_fait>";
-    send(destLocal,(const void *)demande_liste.c_str(),sizeof(demande_liste),0);
-    // TO DO : envoi de la trame au serveur
-}
-
-/**
- * \brief Envoie la demande d'obtention d'un rapport
- * d'un employé
- */
-void DemandeRapportParticulier(string pseudo)
-{
-    string demande_rapport="demande_rapport>"+pseudo;
-    send(destLocal,(const void *)demande_rapport.c_str(),sizeof(demande_rapport),0);
-    // TO DO : envoi de de la trame au serveur
-}
-
-
-/**
  * \fn string Analyse(string p_message)
  * \brief Permet d'analyser ce qui arrive dans la trame que l'on a reçu 
  * \param string p_message
@@ -208,6 +250,12 @@ string Analyse()
     {
         cout << "Désolé vous avez été refusé par le serveur" << endl;
         return "refuse";
+    }
+    if (action.compare("action_suivante_controleur")==0)
+    {
+        cout << transmission << endl;
+        ChoixControleur();
+        return "action suivante";
     }
     if(action.compare("liste_rapport_fait")==0)
     {
@@ -265,42 +313,6 @@ bool Connexion()
     }
 }
 
-/**
- * \brief Permet au controleur d'effectuer un choix
- * -Soit obtenir la liste des employés qui ont fait
- * leur rapport
- * -Soit de consulter le rapport d'un employé
- * -Soit de se déconnecter
- */
-void ChoixControleur()
-{
-    string p_pseudo;
-    cout << "Plusieurs possibilités sont à votre dispositions (saisissez celui qui vous convient)" << endl;
-    cout << "1. Consulter la liste des employés qui ont fait leur rapport" << endl;
-    cout << "2. Consulter le rapport d'un employé" << endl;
-    cout << "3. Vous déconnectez" << endl;
-    int choix=0;
-    cin >> choix;
-    while (choix!=3)
-    {
-        switch (choix)
-        {
-            case 1:
-                DemandeListeRapportFait();
-                continue;
-                
-            case 2:
-                cout << "Saisissez l'employé dont vous voulez consultez le rapport" << endl;
-                getline(cin,p_pseudo);
-                DemandeRapportParticulier(p_pseudo);
-                continue;
-            default: cout << "Désolé cette action est inconnue, veuillez recommencer" << endl;
-                continue;
-        }
-    }
-    string deconnexion="deconnexion>"+pseudo;
-    send(destLocal,(const void *)deconnexion.c_str(),sizeof(deconnexion),0);
-}
 
 //~Employe()
 //{
