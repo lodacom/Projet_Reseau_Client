@@ -36,8 +36,9 @@ sockaddr_in* adresseExp;
  */
 void DemandeListeRapportFait()
 {
-    string demande_liste="demande_liste_rapport_fait>";
-    send(destLocal,(const void *)demande_liste.c_str(),sizeof(demande_liste),0);
+    char tmp[100];
+    strcpy(tmp,"demande_liste_rapport_fait>");
+    send(destLocal,tmp,sizeof(tmp),0);
     // TO DO : envoi de la trame au serveur
 }
 
@@ -45,10 +46,17 @@ void DemandeListeRapportFait()
  * \brief Envoie la demande d'obtention d'un rapport
  * d'un employé
  */
-void DemandeRapportParticulier(string pseudo)
+void DemandeRapportParticulier()
 {
-    string demande_rapport="demande_rapport>"+pseudo;
-    send(destLocal,(const void *)demande_rapport.c_str(),sizeof(demande_rapport),0);
+    char* pseudo;
+    printf("Saisissez l'employé dont vous voulez consultez le rapport\n");
+    scanf("%s",pseudo);
+    char tmp[100];
+    strcpy(tmp,"demande_rapport>");
+    strcat(tmp,pseudo);
+    cout << "Concat ok" << endl;
+    send(destLocal,tmp,sizeof(tmp),0);
+    cout << "Envoie de la demande particulière effectuée" <<endl;
     // TO DO : envoi de de la trame au serveur
 }
 
@@ -61,37 +69,31 @@ void DemandeRapportParticulier(string pseudo)
  */
 void ChoixControleur()
 {
-    string p_pseudo;
     cout << "Plusieurs possibilités sont à votre dispositions (saisissez celui qui vous convient)" << endl;
     cout << "1. Consulter la liste des employés qui ont fait leur rapport" << endl;
     cout << "2. Consulter le rapport d'un employé" << endl;
     cout << "3. Vous déconnectez" << endl;
     int choix=0;
-    cin >> choix;
-    while (choix!=3)
+    scanf("%d",&choix);
+
+    switch (choix)
     {
-        switch (choix)
-        {
-            case 1:
-                DemandeListeRapportFait();
-                continue;
-                
-            case 2:
-                cout << "Saisissez l'employé dont vous voulez consultez le rapport" << endl;
-                getline(cin,p_pseudo);
-                DemandeRapportParticulier(p_pseudo);
-                continue;
-            default: cout << "Désolé cette action est inconnue, veuillez recommencer" << endl;
-                continue;
-        }
-        cout << "Plusieurs possibilités sont à votre dispositions (saisissez celui qui vous convient)" << endl;
-        cout << "1. Consulter la liste des employés qui ont fait leur rapport" << endl;
-        cout << "2. Consulter le rapport d'un employé" << endl;
-        cout << "3. Vous déconnectez" << endl;
-        cin >> choix;
+        case 1:
+            DemandeListeRapportFait();
+            break;
+
+        case 2:
+            DemandeRapportParticulier();
+            break;
+        case 3:
+            char tmp[100];
+            strcpy(tmp,"deconnexion>");
+            strcat(tmp,pseudo.c_str());
+            send(destLocal,tmp,sizeof(tmp),0);
+            break;
+        default: cout << "Désolé cette action est inconnue, veuillez recommencer" << endl;
+            break;
     }
-    string deconnexion="deconnexion>"+pseudo;
-    send(destLocal,(const void *)deconnexion.c_str(),sizeof(deconnexion),0);
 }
 
 /**
@@ -101,14 +103,16 @@ void ChoixControleur()
 void CreationListe()
 {
     string pseudo_liste;
-    string envoi_pseudo_liste;
+    //string envoi_pseudo_liste;
     printf("Veuillez créer votre liste contenant les employés devant rédiger un rapport aujourd'hui\n");
     printf("Quand vous avez terminé, tapez fini\n");
     getline(cin,pseudo_liste);
     while(pseudo_liste.compare("fini")!=0)
     {
-        envoi_pseudo_liste = "ajout_employe>"+pseudo_liste; //TO DO envoi du pseudo
-        send(destLocal,(const void *)envoi_pseudo_liste.c_str(),sizeof(envoi_pseudo_liste),0);
+        char tmp[100];
+        strcpy(tmp,"ajout_employe>");
+        strcat(tmp,pseudo_liste.c_str());
+        send(destLocal,tmp,sizeof(tmp),0);
         getline(cin,pseudo_liste);
     }
     printf("Liste terminée ! \n");
@@ -128,17 +132,23 @@ void EnvoieRapport(string donnees)
     {
         mes += donnees.at(i);
         cpt++;
-        if(cpt == 100)
+        if(cpt == 70)
         {
             //cout << mes << endl; //TODO a remplacer par un envois
-            envoi ="partie_rapport>"+pseudo+"@"+mes;
-            send(destLocal,(const void *)envoi.c_str(),sizeof(envoi),0);
+            char tmp[100];
+            strcpy(tmp,"partie_rapport>");
+            strcat(tmp,pseudo.c_str());
+            strcat(tmp,"@");
+            strcat(tmp,mes.c_str());
+            send(destLocal,tmp,sizeof(tmp),0);
             mes = "";
             cpt = 0;
         }
     }
-    envoi="fin_section>"+pseudo;
-    send(destLocal,(const void *)envoi.c_str(),sizeof(envoi),0);
+    char tmp[100];
+    strcpy(tmp,"fin_section>");
+    strcat(tmp,pseudo.c_str());
+    send(destLocal,tmp,sizeof(tmp),0);
    // cout << mes << endl;
 }
 
@@ -161,8 +171,10 @@ void RedigeRapport()
         getline(cin,rapport);
     }
     printf("Votre rapport est terminé ! Vous allez être déconnecté \n");
-    string deconnexion="deconnexion>"+pseudo;
-    send(destLocal,(const void *)deconnexion.c_str(),sizeof(deconnexion),0);
+    char tmp[100];
+    strcpy(tmp,"deconnexion>");
+    strcat(tmp,pseudo.c_str());
+    send(destLocal,tmp,sizeof(tmp),0);
 }
 
 /**
@@ -216,7 +228,7 @@ void AuthentificationEmploye()
  */
 string Analyse()
 {
-    recv(destLocal,recu,sizeof recu, 0);
+    recv(destLocal,recu,100*sizeof(&recu), 0);
     char* message=recu;
     string p_message=message;
     
