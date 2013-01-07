@@ -195,8 +195,8 @@ void AuthentificationEmploye()
 {
     char* p_message;
     printf("Saisissez votre pseudo pour vous authentifiez (pas plus de 20 caractères et pas d'espace)\n");
-    scanf("%s",p_message);
-    string message=p_message;
+    string message = "";
+    cin >> message;
     while (message.length()>20 and strtok((char*)message.c_str()," ")!=NULL)
     {
        printf("Saisissez votre pseudo pour vous authentifiez (pas plus de 20 caractères et pas d'espace)\n");
@@ -207,7 +207,7 @@ void AuthentificationEmploye()
     //string connexion = "connexion_employe>"+message;
     char tmp[50];
     strcpy(tmp,"connexion_employe>");
-    strcat(tmp,p_message);
+    strcat(tmp,message.c_str());
     int test=send(destLocal,tmp,sizeof(tmp),0);
     //int test=send(destLocal,connexion.c_str(),strlen(connexion.c_str()),0);
     if (test>=0)
@@ -228,7 +228,7 @@ void AuthentificationEmploye()
  */
 string Analyse()
 {
-    recv(destLocal,recu,100*sizeof(&recu), 0);
+    recv(destLocal,recu,sizeof(recu), 0);
     char* message=recu;
     string p_message=message;
     
@@ -238,6 +238,11 @@ string Analyse()
     {
         i++;
     }
+    
+    if(i == p_message.length()){
+        i--;
+    }
+    
     string action=p_message.substr(0,i);
     string transmission=p_message.substr(i+1,p_message.length());
     cout << "La trame a été analysée avec action: "<< action << " et message: " << transmission << endl;
